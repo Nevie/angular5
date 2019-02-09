@@ -1,0 +1,73 @@
+<button class="btn btn-sm btn-light" (click)="goBack()">go back</button>
+<div class="container">
+  <div class="row d-flex justify-content-between">
+    <div class="col">
+      <div>
+        <label for="validationCustom01">Heading</label>
+        <input type="text" [(ngModel)]="news.title" class="form-control" id="validationCustom01" required>
+        <div class="invalid-feedback">
+          Please provide a Heading.
+        </div>
+      </div>
+      <div>
+        <label for="description">Short description</label>
+        <input type="text" class="form-control" [(ngModel)]="news.description" id="description">
+      </div>
+      <div>
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" [(ngModel)]="news.content" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="col">
+      <div>
+        <!-- <span for="customRadioInline1">Image</span>-->
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" checked="true" id="customRadioInline1" name="customRadioInline1"
+                 class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline1">url</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline2">file</label>
+        </div>
+        <!--<div class="custom-file">
+          <input type="file" class="custom-file-input" id="validatedCustomFile">
+          <label class="custom-file-label" for="validatedCustomFile">Choose ing</label>
+          <div class="invalid-feedback">Example invalid custom file img</div>
+        </div>-->
+        <div class="custom-file">
+          <label for="urlToImage">Image</label>
+          <input type="text" class="form-control" [(ngModel)]="news.urlToImage" id="urlToImage">
+        </div>
+
+      </div>
+      <div>
+        <label for="validationCustom04">Data</label>
+        <input type="text" class="form-control" id="validationCustom04" [(ngModel)]="news.publishedAt"
+               placeholder="dd/mm/yy" required>
+
+      </div>
+      <div>
+        <label for="validationCustom05">Author</label>
+        <input type="text" class="form-control" id="validationCustom05" [(ngModel)]="news.author" required>
+        <div class="invalid-feedback">
+          Please provide a Author name
+        </div>
+      </div>
+      <div>
+        <label for="validationCustom06">Source URL</label>
+        <input type="text" class="form-control" [(ngModel)]="news.url" id="validationCustom06"
+               placeholder="http://example.com" required>
+        <div class="invalid-feedback">
+          Please provide a valid Source URL
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div class="d-flex justify-content-center p-2">
+  <button class="btn btn-primary mr-1" type="submit">Save</button>
+  <button class="btn btn-primary" type="submit" (click)="goBack()">Cancel</button>
+</div>

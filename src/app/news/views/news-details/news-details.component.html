@@ -7,14 +7,17 @@
       <div class="col-6">
         {{news.content}}
       </div>
+      <div class="col-6">
+        {{news.description}}
+      </div>
 
     </div>
     <div>
       <span>Data: {{news.publishedAt | date:'h/mm/yyyy : h:mm'}}</span><br/>
       <span>{{news.author}}</span>
     </div>
-    <div class="d-flex justify-content-center">
-      <button class="btn btn-primary button mr-2" (click)="editNews($event)">Edit</button>
-      <button class="btn btn-primary button mr-2" (click)="deleteNews($event)">Delete</button>
+    <div *ngIf="customNews" class="d-flex justify-content-center">
+      <button class="btn btn-primary button mr-2" (click)="editNews(news._id)">Edit</button>
+      <button class="btn btn-primary button mr-2" (click)="deleteNews()">Delete</button>
     </div>
 </div>

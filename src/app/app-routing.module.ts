@@ -10,9 +10,9 @@ import {NewsCreateComponent} from './news/views/news-create/news-create.componen
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: HomePageController  },
-  { path: 'details/:id', component: NewsDetailsComponent },
-  { path: 'edit/:id', component: NewsEditComponent/* , canActivate: [AuthGuard]*/ },
-  { path: 'create', component: NewsCreateComponent},
+  { path: 'news/details', component: NewsDetailsComponent },
+  { path: 'news/edit/:id', component: NewsEditComponent/* , canActivate: [AuthGuard]*/ },
+  { path: 'news/create', component: NewsCreateComponent},
   { path: 'login', component: LoginComponent },
 ];
 

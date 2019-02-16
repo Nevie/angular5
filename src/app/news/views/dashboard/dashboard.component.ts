@@ -1,27 +1,35 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NewsItem} from '../../models/NewsItem';
+import {SearchService} from '../../services/searchService';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   @Input() newsList: NewsItem[];
   @Output() getDetailsEmitted: EventEmitter<any> = new EventEmitter();
-  @Output() getHeroesEmitted: EventEmitter<any> = new EventEmitter();
+  @Output() getNewsEmitted: EventEmitter<any> = new EventEmitter();
   @Output() editNewsEmitted: EventEmitter<any> = new EventEmitter();
   @Output() deleteNewsEmitted: EventEmitter<any> = new EventEmitter();
+  searchTerm: string = '';
 
-  constructor() {
+  constructor(private searchService: SearchService) {
   }
 
-  getHeroes(): void {
-   this.getHeroesEmitted.emit();
+  ngOnInit() {
+    this.searchService.searchTerm.subscribe(value => {
+      this.searchTerm = value;
+    });
   }
 
-  getDetails(id: number) {
-    this.getDetailsEmitted.emit(id);
+  getNews(): void {
+    this.getNewsEmitted.emit();
+  }
+
+  getDetails(news) {
+    this.getDetailsEmitted.emit(news);
   }
 
   editNews(id: number) {

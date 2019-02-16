@@ -1,0 +1,5 @@
+{
+  "apiKey": "c488ed89db8f4d868c0b05c49e0ad7a4",
+  "apiUrl": "https://newsapi.org/v2",
+  "DB" : "http://localhost:3000/news"
+}

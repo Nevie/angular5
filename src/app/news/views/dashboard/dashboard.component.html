@@ -1,20 +1,20 @@
 <div class="align-content-sm-center">
-  <ul class="list-group list-group-flush">
-    <li *ngFor="let news of newsList"  class="list-group-item border border-dark">
+  <ul *ngIf="newsList" class="list-group list-group-flush">
+    <li *ngFor="let news of newsList | filterNewsByTitle: searchTerm" class="list-group-item border border-dark">
       <div class="row">
         <div class="col"><img class="img-fluid" src="{{news.urlToImage}}">
         </div>
-        <div class="col-6" (click)="getDetails(news.source.id)">
+        <div class="col-6" (click)="getDetails(news)">
           <h5 class="card-title mb-1"> {{news.title}} </h5>
-          <div> {{ (news.description.length > 50) ? (news.description | slice:0:50) + '..' : (news.description) }}
+          <div *ngIf="news.description"> {{ (news.description.length > 50) ? (news.description | slice:0:50) + '..' : (news.description) }}
             <span>Read more..</span>
           </div>
         </div>
         <div class="d-flex bd-highlight media-body col-3">
           <div class="d-flex justify-content-between">
             <small class="pr-1 align-text-top">{{news.publishedAt | date:'h/mm/yyyy : h:mm'}}</small>
-            <div>
-              <a class="btn btn-primary btn-sm button" (click)="editNews(news.source.id)" role="button">Edit</a>
+            <div *ngIf="news.custom">
+              <a class="btn btn-primary btn-sm button" (click)="editNews(news._id)" role="button">Edit</a>
               <a class="btn btn-primary btn-sm mt-1 button" (click)="deleteNews(news)" role="button">Delete</a>
             </div>
           </div>
@@ -22,7 +22,7 @@
       </div>
     </li>
   </ul>
-  <button type="button" class="btn btn-secondary btn-lg btn-block bg-dark text-white" (click)="getHeroes()">Load more
+  <button type="button" class="btn btn-secondary btn-lg btn-block bg-dark text-white" (click)="getNews()">Load more
   </button>
 </div>
 

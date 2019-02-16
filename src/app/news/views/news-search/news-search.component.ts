@@ -1,10 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {NewsService} from '../../services/news-service';
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
-import {NewsItem} from '../../models/NewsItem';
+import {NewsService} from '../../services/newsService';
+import {SearchService} from '../../services/searchService';
+import {ChannelsResponseModel} from '../../models/ChannelsResponseModel';
+import {ChannelsService} from '../../services/channelsService';
+import {ChannelsModel} from '../../models/ChannelsModel';
+import {CustomNewsService} from '../../services/customNewsService';
 
 @Component({
   selector: 'app-news-search',
@@ -12,28 +13,40 @@ import {NewsItem} from '../../models/NewsItem';
   styleUrls: ['./news-search.component.css']
 })
 export class NewsSearchComponent implements OnInit {
-
+  public channelList: any[];
+  public selectedChannel: ChannelsModel;
+  public isChecked: boolean = false;
   @Output() addArticleSelected: EventEmitter<any> = new EventEmitter();
-  @Output() searchEmitted: EventEmitter<any> = new EventEmitter();
 
-  newsList$: Observable<NewsItem[]>;
-  private searchTerms = new Subject<string>();
-
-  constructor(private newsService: NewsService) {
+  constructor(private newsService: NewsService,
+              private searchService: SearchService,
+              private channelsService: ChannelsService,
+              private customNewsService: CustomNewsService) {
+    this.selectedChannel = {
+      id: 'abc-news',
+      name: 'ABC News'
+    };
   }
 
-  // Push a search term into the observable stream.
+  ngOnInit() {
+    this.channelsService.chanelSelected.next(this.selectedChannel);
+
+    this.newsService.getChannels().subscribe((data: ChannelsResponseModel) => {
+      this.channelList = data.sources;
+    }, (error) => console.log(error));
+  }
+
+  channelSelected(chanel: ChannelsModel) {
+    this.selectedChannel = chanel;
+    this.channelsService.chanelSelectedChanged(chanel);
+  }
+
+  getCustom(state) {
+    this.customNewsService.customNewsStateChanged(state);
+  }
+
   search(term: string): void {
-    this.searchTerms.next(term);
-  }
-
-  ngOnInit(): void {
-    this.newsList$ = this.searchTerms.pipe(
-      // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.newsService.searchNews(term)),
-    );
+    this.searchService.searchTermChanged(term);
   }
 
   addArticle() {

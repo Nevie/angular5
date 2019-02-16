@@ -9,7 +9,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomePageController} from './viewcontrollers/home-page/home-page-controller';
 import {FormsModule} from '@angular/forms';
 import {NewsCreateComponent} from './views/news-create/news-create.component';
-
+import {SearchService} from './services/searchService';
+import {FilterNewsByTitlePipe} from '../helpers/filterNewsByTitle.pipe';
+import {HttpClientModule} from '@angular/common/http';
+import {ChannelsService} from './services/channelsService';
+import {  ReactiveFormsModule } from '@angular/forms';
+import {CustomNewsService} from './services/customNewsService';
 @NgModule({
   declarations: [
     NewsEditComponent,
@@ -17,15 +22,21 @@ import {NewsCreateComponent} from './views/news-create/news-create.component';
     DashboardComponent,
     NewsSearchComponent,
     NewsCreateComponent,
-    HomePageController
+    HomePageController,
+    FilterNewsByTitlePipe
   ],
   providers: [
+    SearchService,
+    ChannelsService,
+    CustomNewsService,
     MockDataService
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ]
 })
 export class NewsModule { }

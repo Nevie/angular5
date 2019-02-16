@@ -1,59 +1,92 @@
 <button class="btn btn-sm btn-light" (click)="goBack()">go back</button>
 <div class="container">
-  <div class="row d-flex justify-content-between">
-    <div class="col">
-      <div>
-        <label for="validationCustom01">Heading</label>
-        <input type="text" [(ngModel)]="news.title" class="form-control" id="validationCustom01" required>
-        <div class="invalid-feedback">
-          Please provide a Heading.
+  <form [formGroup]="newsForm" >
+    <div class="row d-flex justify-content-between">
+      <div class="col">
+        <div>
+          <label for="validationCustom01">Heading</label>
+          <input type="text" formControlName="title" class="form-control" id="validationCustom01">
+          <div
+            *ngIf="newsForm.controls['title'].invalid && (newsForm.controls['title'].dirty || newsForm.controls['title'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="newsForm.controls['title'].errors.required">
+              Heading is required.
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="description">Short description</label>
+          <input type="text" class="form-control" formControlName="description" id="description">
+          <div
+            *ngIf="newsForm.controls['description'].invalid && (newsForm.controls['description'].dirty || newsForm.controls['description'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="newsForm.controls['description'].errors.required">
+              Description is required.
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="exampleFormControlTextarea1">Content</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" formControlName="content"
+                    rows="3"></textarea>
+          <div *ngIf="newsForm.controls['content'].invalid && (newsForm.controls['content'].dirty ||
+          newsForm.controls['content'].touched)" class="alert alert-danger">
+            <div *ngIf="newsForm.controls['content'].errors.required">
+              Content is required.
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <label for="description">Short description</label>
-        <input type="text" class="form-control" [(ngModel)]="news.description" id="description">
-      </div>
-      <div>
-        <label for="exampleFormControlTextarea1">Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" [(ngModel)]="news.content" rows="3"></textarea>
+      <div class="col">
+        <div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1"
+                   class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline1">url</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline2">file</label>
+          </div>
+          <div class="custom-file">
+            <label for="urlToImage">Image</label>
+            <input type="text" class="form-control" formControlName="urlToImage" id="urlToImage">
+          </div>
+          <div *ngIf="newsForm.controls['urlToImage'].invalid && (newsForm.controls['urlToImage'].dirty ||
+          newsForm.controls['urlToImage'].touched)" class="alert alert-danger">
+            <div *ngIf="newsForm.controls['urlToImage'].errors.required">
+              Image is required.
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="validationCustom05">Author</label>
+          <input type="text" class="form-control" id="validationCustom05" formControlName="author" required>
+          <div *ngIf="newsForm.controls['author'].invalid && (newsForm.controls['author'].dirty ||
+          newsForm.controls['author'].touched)" class="alert alert-danger">
+            <div *ngIf="newsForm.controls['author'].errors.required">
+              Author name is required.
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="validationCustom06">Source URL</label>
+          <input type="text" class="form-control" formControlName="url" id="validationCustom06"
+                 placeholder="http://example.com" required>
+          <div *ngIf="newsForm.controls['url'].invalid && (newsForm.controls['url'].dirty ||
+          newsForm.controls['url'].touched)" class="alert alert-danger">
+            <div *ngIf="newsForm.controls['url'].errors.required">
+              Link to source  is required.
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col">
-      <div>
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="customRadioInline1" name="customRadioInline1"
-                 class="custom-control-input">
-          <label class="custom-control-label" for="customRadioInline1">url</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-          <label class="custom-control-label" for="customRadioInline2">file</label>
-        </div>
-        <div class="custom-file">
-          <label for="urlToImage">Image</label>
-          <input type="text" class="form-control" [(ngModel)]="news.urlToImage" id="urlToImage">
-        </div>
+    <div class="d-flex justify-content-center p-2">
 
-      </div>
-      <div>
-        <label for="validationCustom05">Author</label>
-        <input type="text" class="form-control" id="validationCustom05" [(ngModel)]="news.author" required>
-        <div class="invalid-feedback">
-          Please provide a Author name
-        </div>
-      </div>
-      <div>
-        <label for="validationCustom06">Source URL</label>
-        <input type="text" class="form-control" [(ngModel)]="news.url" id="validationCustom06"
-               placeholder="http://example.com" required>
-        <div class="invalid-feedback">
-          Please provide a valid Source URL
-        </div>
-      </div>
-    </div>
+    <button [disabled]="newsForm.pristine || newsForm.invalid" class="btn btn-primary mr-1" type="submit" (click)="save(newsForm.value)">Save</button>
+    <button class="btn btn-primary" type="submit" (click)="goBack()">Cancel</button>
   </div>
+  </form>
 </div>
-<div class="d-flex justify-content-center p-2">
-  <button class="btn btn-primary mr-1" type="submit" (click)="save()">Save</button>
-  <button class="btn btn-primary" type="submit" (click)="goBack()">Cancel</button>
-</div>
+

@@ -1,18 +1,16 @@
 <div id="search-component" class="d-flex justify-content-between">
+    <div class="dropdown show">
+      Selected source:
+      <button class="btn btn-secondary dropdown-toggle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{selectedChannel.name}}
+      </button>
 
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-      Select source
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <li>
-        <a class="dropdown-item">Channel 1</a>
-        <a class="dropdown-item">Channel 2</a>
-        <a class="dropdown-item">Channel 3</a>
-      </li>
-    </ul>
-  </div>
+      <ul class="dropdown-menu customDropDown" aria-labelledby="dropdownMenu">
+        <li *ngFor="let channel of channelList">
+        <a class="dropdown-item" (click)="channelSelected(channel)">{{channel.name}}</a>
+        </li>
+      </ul>
+    </div>
   <div >
     <h4>News Search</h4>
     <input #searchBox id="search-box" (input)="search(searchBox.value)"/>
@@ -20,17 +18,9 @@
 
   <div class="d-flex justify-content-between">
     <div class="md-addon m-1">
-      <input class="form-check-input" type="checkbox" value="" id="createdBy">
+      <input class="form-check-input" id="createdBy" type="checkbox" [(ngModel)]="isChecked" (change)="getCustom(isChecked)"/>
       <label class="form-check-label" for="createdBy">Only created by me</label>
     </div>
     <button class="btn btn-primary" (click)="addArticle()">Add Article</button>
   </div>
-
-  <!-- <ul class="search-result">
-     <li *ngFor="let news of newsList$ | async" >
-      &lt;!&ndash; <a [routerLink]="['/detail/',news.id]">
-         {{hero.name}}
-       </a>&ndash;&gt;
-     </li>
-   </ul>-->
 </div>

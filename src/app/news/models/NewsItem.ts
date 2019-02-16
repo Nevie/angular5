@@ -10,6 +10,7 @@ export class NewsItem {
   urlToImage: string;
   content: string;
   publishedAt: Date;
+  custom?: boolean;
 
   constructor() {
     this.id = Math.floor(Math.random() * (100000 - 20 + 1)) + 20;

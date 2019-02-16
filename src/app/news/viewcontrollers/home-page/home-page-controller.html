@@ -1,16 +1,15 @@
 
 <div class="d-flex pl-1 bd-highlight text-center" id="header">
-  <span class="d-block p bg-dark text-white w-100">Source name</span>
+  <span class="d-block p bg-dark text-white w-100">{{channel.name}}</span>
 </div>
 <app-news-search class="m-1"
-  (addArticleSelected)="addArticleSelected($event)"
-  (searchEmitted) ="search($event)">
+  (addArticleSelected)="addArticleSelected($event)">
 </app-news-search>
 
 <app-dashboard
   [newsList]="newsList"
   (getDetailsEmitted)="getDetails($event)"
-  (getHeroesEmitted)="getHeroes($event)"
+  (getNewsEmitted)="getNews()"
   (editNewsEmitted)="editNews($event)"
   (deleteNewsEmitted)="deleteNews($event)">
 </app-dashboard>

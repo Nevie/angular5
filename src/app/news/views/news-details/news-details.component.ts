@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {NewsService} from '../../services/news-service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NewsService} from '../../services/newsService';
 import {Location} from '@angular/common';
 import {NewsItem} from '../../models/NewsItem';
 
@@ -11,12 +11,14 @@ import {NewsItem} from '../../models/NewsItem';
 })
 
 export class NewsDetailsComponent implements OnInit {
-  @Input() news: NewsItem;
+  @Input() news: any;
+  public customNews: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService,
-    private location: Location
+    private location: Location,
+    private  router: Router
   ) {
   }
 
@@ -25,21 +27,31 @@ export class NewsDetailsComponent implements OnInit {
   }
 
   getNews(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.newsService.getNewsById(id)
-      .subscribe(news => this.news = news);
+    const id = this.route.snapshot.queryParams['id'];
+    if (id) {
+      this.customNews = true;
+      this.newsService.getNewsById(id)
+        .subscribe(news => this.news = news);
+    } else {
+      this.customNews = false;
+      const term = this.route.snapshot.queryParams['term'];
+      this.newsService.getNewsByTerm(term)
+        .subscribe(news => this.news = news.articles[0]);
+    }
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  editNews() {
-    console.log('Edit News clicked');
+  editNews(id: string) {
+    this.router.navigate(['news/edit', id]);
   }
 
   deleteNews() {
-    console.log('Delete News clicked');
+    this.newsService.deleteNews(this.news._id).subscribe(() => {
+      this.location.back();
+    });
   }
 
 }

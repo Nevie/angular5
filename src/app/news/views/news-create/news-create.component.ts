@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {NewsService} from '../../services/news-service';
+import {NewsService} from '../../services/newsService';
 import {Location} from '@angular/common';
 import {NewsItem} from '../../models/NewsItem';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-news-create',
@@ -11,20 +12,34 @@ import {NewsItem} from '../../models/NewsItem';
 })
 export class NewsCreateComponent {
   public news: NewsItem;
+  newsForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService,
-    private location: Location
+    private location: Location,
+    private fb: FormBuilder
   ) {
     this.news = new NewsItem();
+    this.createForm();
   }
 
-  save(): void {
-    console.log(this.news);
+  createForm() {
+    this.newsForm = new FormGroup({
+      author: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      url: new FormControl('', Validators.required),
+      urlToImage: new FormControl('', Validators.required),
+      content: new FormControl('', Validators.required)
+    });
+  }
+
+  save(data): void {
+    debugger;
+    this.news = data;
     this.news.publishedAt = new Date(Date.now());
-    console.log(this.news.publishedAt);
-    this.newsService.updateNews(this.news);
+    this.newsService.addNews(this.news);
     this.goBack();
   }
 

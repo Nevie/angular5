@@ -1,5 +1,5 @@
 import {NewsItem} from './NewsItem';
 
-export interface ResponceModel {
+export interface NewsResponseModel {
   articles: NewsItem[];
 }

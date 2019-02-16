@@ -4,7 +4,6 @@ import {NewsEditComponent} from './views/news-edit/news-edit.component';
 import {NewsDetailsComponent} from './views/news-details/news-details.component';
 import {DashboardComponent} from './views/dashboard/dashboard.component';
 import {NewsSearchComponent} from './views/news-search/news-search.component';
-import {MockDataService} from './services/mock-data-service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomePageController} from './viewcontrollers/home-page/home-page-controller';
 import {FormsModule} from '@angular/forms';
@@ -28,8 +27,7 @@ import {CustomNewsService} from './services/customNewsService';
   providers: [
     SearchService,
     ChannelsService,
-    CustomNewsService,
-    MockDataService
+    CustomNewsService
   ],
   imports: [
     FormsModule,

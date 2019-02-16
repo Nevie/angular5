@@ -5,7 +5,6 @@ import {NewsResponseModel} from '../models/NewsResponseModel';
 import {NewsItem} from '../models/NewsItem';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {MockDataService} from './mock-data-service';
 import * as appConfig from '../../apiConfig.json';
 import {ChannelsResponseModel} from '../models/ChannelsResponseModel';
 
@@ -13,8 +12,7 @@ import {ChannelsResponseModel} from '../models/ChannelsResponseModel';
 export class NewsService {
 
   constructor(private http: HttpClient,
-              private messageService: MessageService,
-              private mockDataService: MockDataService) {
+              private messageService: MessageService) {
   }
 
   getNews(chanel: string = 'bbc-news'): Observable<NewsResponseModel> {
@@ -62,7 +60,7 @@ export class NewsService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    return this.http.get<NewsItem>(`${appConfig.DB}/${id}`, httpOptions);
+    return this.http.get<NewsItem>(`${appConfig.server}/${id}`, httpOptions);
   }
 
   addNews(obj: NewsItem) {
@@ -74,7 +72,7 @@ export class NewsService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    this.http.post<NewsItem>(`${appConfig.DB}/add`, obj, httpOptions);
+    this.http.post<NewsItem>(`${appConfig.server}/add`, obj, httpOptions);
   }
 
   getCustomNews(): any {
@@ -86,7 +84,7 @@ export class NewsService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    return this.http.get<NewsItem>(`${appConfig.DB}`, httpOptions);
+    return this.http.get<NewsItem>(`${appConfig.server}`, httpOptions);
   }
 
   deleteNews(newsId: string): Observable<any> {
@@ -98,7 +96,7 @@ export class NewsService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    return this.http.delete(`${appConfig.DB}/${newsId}`, httpOptions);
+    return this.http.delete(`${appConfig.server}/${newsId}`, httpOptions);
 
   }
 
@@ -112,7 +110,7 @@ export class NewsService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    return this.http.put<NewsItem>(`${appConfig.DB}/${news.id}`, news, httpOptions);
+    return this.http.put<NewsItem>(`${appConfig.server}/${news.id}`, news, httpOptions);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

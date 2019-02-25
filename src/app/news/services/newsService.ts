@@ -33,7 +33,6 @@ export class NewsService {
     return this.http.get<NewsResponseModel>(path)
       .pipe(
         map((response: any) => {
-          debugger
           return response;
         })
       );

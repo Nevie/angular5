@@ -15,7 +15,7 @@ export class NewsCreateComponent {
   newsForm: FormGroup;
 
   constructor(
-    private route: ActivatedRoute,
+  //  private route: ActivatedRoute,
     private newsService: NewsService,
     private location: Location,
     private fb: FormBuilder
@@ -36,7 +36,6 @@ export class NewsCreateComponent {
   }
 
   save(data): void {
-    debugger;
     this.news = data;
     this.news.publishedAt = new Date(Date.now());
     this.newsService.addNews(this.news);

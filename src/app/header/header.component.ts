@@ -8,6 +8,6 @@ import {AuthService} from '../news/services/authService';
 })
 export class HeaderComponent {
 
-  constructor(private auth: AuthService) { }
+  constructor() { }
 
 }

@@ -29,7 +29,6 @@ class NewsService {
   }
 
   add(news) {
-    debugger
     return new Promise((resolve, reject) =>
       News.create(news, (err, news)=> {
         if (err) reject(err);

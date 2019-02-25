@@ -1,10 +1,8 @@
-
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NewsModule} from './news/news.module';
-import {AuthModule} from './auth/auth.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderComponent} from './header/header.component';
 
@@ -16,12 +14,8 @@ import {HeaderComponent} from './header/header.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
     NewsModule,
     BrowserAnimationsModule
-  ],
-  providers: [
-    AuthModule
   ],
   bootstrap: [AppComponent]
 })

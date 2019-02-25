@@ -47,7 +47,6 @@ export class HomePageController implements OnInit {
   }
 
   getNews(chanel: string = this.channel.id): void {
-    debugger
     this.newsList = [];
     this.getNewsFromPublicSite(chanel);
     this.getCustomNews();

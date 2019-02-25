@@ -1,6 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import {DashboardComponent} from './dashboard.component';
+import {FilterNewsByTitlePipe} from '../../../helpers/filterNewsByTitle.pipe';
+import {SearchService} from '../../services/searchService';
+import {ChannelsService} from '../../services/channelsService';
+import {CustomNewsService} from '../../services/customNewsService';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,9 +12,16 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      declarations: [
+        DashboardComponent,
+        FilterNewsByTitlePipe],
+      providers: [
+        SearchService,
+        ChannelsService,
+        CustomNewsService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -41,7 +41,7 @@ export class NewsSearchComponent implements OnInit {
     this.channelsService.chanelSelectedChanged(chanel);
   }
 
-  getCustom(state) {
+  getCustom(state: boolean) {
     this.customNewsService.customNewsStateChanged(state);
   }
 

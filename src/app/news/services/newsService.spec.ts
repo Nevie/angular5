@@ -85,6 +85,12 @@ describe('NewsService', () => {
       req.flush(dummyNews.articles[0]);
     });
 
+    it('addNews should return an Observable', () => {
+      spyOn(service, 'log');
+      service.addNews(dummyNews.articles[0]);
+      expect(service.log).toHaveBeenCalled();
+    });
+
   });
 
 });

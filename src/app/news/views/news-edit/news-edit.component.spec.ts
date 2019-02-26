@@ -1,11 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NewsEditComponent } from './news-edit.component';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {Location} from '@angular/common';
+import {NewsEditComponent} from './news-edit.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NewsService} from '../../services/newsService';
 import {defer, of} from 'rxjs';
+import {SpyLocation} from '@angular/common/testing';
 
 describe('NewsEditComponent', () => {
   let component: NewsEditComponent;
@@ -29,6 +30,7 @@ describe('NewsEditComponent', () => {
   function fakeAsyncResponse<T>(data: T) {
     return defer(() => Promise.resolve(data));
   }
+
   const newsServiceStub = {
     getNewsById(id) {
       return fakeAsyncResponse(news.articles);
@@ -46,12 +48,13 @@ describe('NewsEditComponent', () => {
         HttpClientTestingModule,
         RouterModule.forRoot([]),
       ],
-      providers:[
+      providers: [
+        {provide: Location, useClass: SpyLocation},
         {provide: NewsService, useValue: newsServiceStub},
       ],
-      declarations: [ NewsEditComponent ]
+      declarations: [NewsEditComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     newsService = TestBed.get(NewsService);
   }));
@@ -71,9 +74,21 @@ describe('NewsEditComponent', () => {
     fixture.detectChanges();
     expect(component.dataExist).toEqual(true);
   }));
+  it('save should be called', async(async () => {
+    spyOn(newsService, 'updateNews').and.returnValue(of(news.articles[0]));
+    component.save(news.articles[0]);
+    fixture.detectChanges();
+    expect(newsService.updateNews).toHaveBeenCalled();
+  }));
   it('should createForm', () => {
     component.createForm(news.articles[0]);
     fixture.detectChanges();
     expect(component.newsForm).not.toBeNull();
   });
+
+  it('should call  location.back")', inject([Location], (loc: Location) => {
+    spyOn(loc, 'back');
+    component.goBack();
+    expect(loc.back).toHaveBeenCalledTimes(1);
+  }));
 });

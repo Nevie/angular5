@@ -54,4 +54,10 @@ describe('NewsCreateComponent', () => {
     comp.goBack();
     expect(loc.back).toHaveBeenCalledTimes(1);
   }));
+
+  it('should createForm', () => {
+    comp.createForm();
+    fixture.detectChanges();
+    expect(component.newsForm).not.toBeNull();
+  });
 });

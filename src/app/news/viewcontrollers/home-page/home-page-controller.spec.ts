@@ -103,6 +103,14 @@ describe('HomePageComponent', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
     });
+    it('ngOnInit', () => {
+      const chanel = {id: 'abc-news', name: 'ABC News'};
+      spyOn(comp, 'getNews');
+      comp.ngOnInit();
+      fixture.detectChanges();
+      expect(comp.getNews).toHaveBeenCalled();
+      expect(comp.channel).toEqual(chanel);
+    });
 
     it('getNews should be called', async(async () => {
       const chanel = {id: 'chanelName', name: 'channel name'};
@@ -153,6 +161,13 @@ describe('HomePageComponent', () => {
       comp.editNews(1);
       const url = spy.calls.first().args[0];
       expect(url).toEqual(['news/edit', 1]);
+    }));
+
+    it('should call Router.navigate("news/create")', inject([Router], (router: Router) => {
+      const spy = spyOn(router, 'navigate');
+      component.addArticleSelected();
+      const url = spy.calls.first().args[0];
+      expect(url).toEqual(['news/create']);
     }));
   });
 });

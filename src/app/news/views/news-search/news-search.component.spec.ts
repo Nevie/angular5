@@ -47,7 +47,7 @@ describe('NewsSearchComponent', () => {
     })
       .compileComponents();
     comp = TestBed.get(NewsSearchComponent);
-    
+
     // Services provided to the TestBed
     channelsService = TestBed.get(ChannelsService);
     customNewsService = TestBed.get(CustomNewsService);
@@ -95,4 +95,12 @@ describe('NewsSearchComponent', () => {
     fixture.detectChanges();
     expect(searchService.searchTermChanged).toHaveBeenCalledWith(term);
   }));
+
+  it('should emit addArticleSelected event', (done) => {
+    component.addArticleSelected.subscribe(g => {
+      expect(g).toBeUndefined();
+      done();
+    });
+    component.addArticle();
+  });
 });

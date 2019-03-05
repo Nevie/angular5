@@ -120,7 +120,7 @@ export class NewsService {
     };
   }
 
-  private log(message: string) {
+  log(message: string) {
     this.messageService.add(`NewsService: ${message}`);
   }
 }
